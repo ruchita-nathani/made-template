@@ -1,17 +1,30 @@
-name: GitHub Actions Project
+name: GitHub Actions Test
 
 on:
   push:
     branches:
-    - main
-    paths:
-    - project/**
+      - main
+
+env:
+  KAGGLE_USERNAME: $KAGGLE_USERNAME
+  KAGGLE_KEY: $KAGGLE_KEY
 
 jobs:
   github-actions-test:
     runs-on: ubuntu-latest
     steps:
-    # Run project test
-    - name: Project test Execution
-      run: |
-        ./project/tests.sh
+    - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: main
+
+      # Install python!
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      # execute test pipeline
+      - name: Continuous Integration
+        run: |
+          chmod +x ./main/project/tests.sh && cd ./main && ./project/tests.sh
