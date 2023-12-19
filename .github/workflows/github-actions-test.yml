@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
 env:
   KAGGLE_USERNAME: $KAGGLE_USERNAME
   KAGGLE_KEY: $KAGGLE_KEY
@@ -13,10 +12,10 @@ jobs:
   github-actions-test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        path: main
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: main
 
       # Install python!
       - name: Set up Python 3.11
