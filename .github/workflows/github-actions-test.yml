@@ -1,0 +1,17 @@
+name: GitHub Actions Project
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - project/**
+
+jobs:
+  github-actions-test:
+    runs-on: ubuntu-latest
+    steps:
+    # Run project test
+    - name: Project test Execution
+      run: |
+        ./project/tests.sh
