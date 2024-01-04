@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from sqlalchemy import create_engine, FLOAT, BIGINT, NVARCHAR
 
-os.environ["KAGGLE_CONFIG_DIR"] = os.path.dirname('./project/kaggle.json')
+os.environ["KAGGLE_CONFIG_DIR"] = os.path.dirname('./kaggle.json')
 
 from kaggle.api.kaggle_api_extended import KaggleApi
 
@@ -66,18 +66,21 @@ def download_dataset(kaggle_api):
 def get_bitcoin_dataframe():
     
     bitcoin_df = pd.read_csv(DATASET_DICT["bitcoin"]["file_name"])
-
+    bitcoin_df['Date'] = pd.to_datetime(bitcoin_df['Date']).dt.date
+    
     return bitcoin_df
 
 def get_gold_price_dataframe():
 
     gold_price_df = pd.read_csv(DATASET_DICT["gold-price"]["file_name"])
+    gold_price_df['Date'] = pd.to_datetime(gold_price_df['Date'], format='%d-%m-%Y')
+    gold_price_df['Date'] = gold_price_df['Date'].dt.strftime('%Y-%m-%d')
 
     return gold_price_df
 
 def dump_dataset_to_db(dataframe, db_name, datatype):
 
-    db_engine = create_engine(f"sqlite:///data/{db_name}.sqlite")
+    db_engine = create_engine(f"sqlite:///../data/{db_name}.sqlite")
     dataframe.to_sql(db_name, db_engine, index=False, if_exists='replace', dtype=datatype)
     return
 

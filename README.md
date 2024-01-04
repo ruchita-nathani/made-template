@@ -11,13 +11,13 @@ path: /project/kaggle.json
 ```
 # Give an execute permission to the script file of pipeline
 ```[bash]
-chmod +x /project/pipeline.sh
+chmod +x ./project/pipeline.sh
 ```
 # Run pipeline 
 ```[bash]
-chmod ./project/pipeline.sh
+cd project && ./pipeline.sh
 ```
 ## Run test pipeline
 ```
-./project/tests.sh
+cd project && ./tests.sh
 ```
